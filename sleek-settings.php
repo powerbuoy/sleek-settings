@@ -159,7 +159,7 @@ add_action('wp_enqueue_scripts', function () {
 # Add Google Maps API Key to ACF
 add_action('init', function () {
 	if ($key = get_setting('google_maps_api_key')) {
-		add_filter('acf/fields/google_map/api', function ($api) use ($options) {
+		add_filter('acf/fields/google_map/api', function ($api) use ($key) {
 			$api['key'] = $key;
 
 			return $api;
