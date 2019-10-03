@@ -68,14 +68,15 @@ add_action('admin_init', function () {
 		'label' => __('Google Maps API Key', 'sleek'),
 		'type' => 'text'
 	]);
-	add_setting('google_search_api_key', [
+	# TODO: Move to sleek-google-search
+/*	add_setting('google_search_api_key', [
 		'label' => __('Google Search API Key', 'sleek'),
 		'type' => 'text'
 	]);
 	add_setting('google_search_engine_id', [
 		'label' => __('Google Search Engine ID', 'sleek'),
 		'type' => 'text'
-	]);
+	]); */
 	add_setting('head_code', [
 		'label' => esc_html__('Code inside <head>', 'sleek'),
 		'type' => 'textarea'
