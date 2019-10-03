@@ -2,36 +2,34 @@
 namespace Sleek\Settings;
 
 # Better keep these here so we don't misstype anything
-define('SLEEK_SETTINGS_PAGE_URL', 'sleek-settings');
-define('SLEEK_SETTINGS_NAME', 'sleek_settings');
-define('SLEEK_SETTINGS_SECTION_NAME', SLEEK_SETTINGS_NAME . '_section');
-define('SLEEK_SETTINGS_TITLE', __('Sleek settings', 'sleek'));
+const SETTINGS_NAME = 'sleek_settings';
+const SETTINGS_SECTION_NAME = 'sleek_settings_section';
 
 ####################
 # Add settings field
 function add_setting ($name, $args = []) {
 	$args = array_merge([
-		'label' => false,
+		'label' => null,
 		'type' => 'text'
 	], $args);
 	$label = $args['label'] ?? __(ucfirst(str_replace('_', ' ', $name)), 'sleek');
 
-	add_settings_field(SLEEK_SETTINGS_NAME . '_' . $name, $label, function () use ($name, $args) {
-		$options = get_option(SLEEK_SETTINGS_NAME);
+	add_settings_field(SETTINGS_NAME . '_' . $name, $label, function () use ($name, $args) {
+		$options = get_option(SETTINGS_NAME);
 
 		if ($args['type'] == 'textarea') {
-			echo '<textarea name="' . SLEEK_SETTINGS_NAME . '[' . $name . ']" rows="6" cols="40">' . ($options[$name] ?? '') . '</textarea>';
+			echo '<textarea name="' . SETTINGS_NAME . '[' . $name . ']" rows="6" cols="40">' . ($options[$name] ?? '') . '</textarea>';
 		}
 		else {
-			echo '<input type="text" name="' . SLEEK_SETTINGS_NAME . '[' . $name . ']" value="' . ($options[$name] ?? '') . '">';
+			echo '<input type="text" name="' . SETTINGS_NAME . '[' . $name . ']" value="' . ($options[$name] ?? '') . '">';
 		}
-	}, SLEEK_SETTINGS_SECTION_NAME, SLEEK_SETTINGS_SECTION_NAME);
+	}, SETTINGS_SECTION_NAME, SETTINGS_SECTION_NAME);
 }
 
 ####################
 # Get settings field
 function get_setting ($name) {
-	$options = get_option(SLEEK_SETTINGS_NAME);
+	$options = get_option(SETTINGS_NAME);
 
 	return $options[$name] ?? null;
 }
@@ -39,13 +37,13 @@ function get_setting ($name) {
 ################
 # Add admin page
 add_action('admin_menu', function () {
-	add_options_page(SLEEK_SETTINGS_TITLE, 'Sleek', 'manage_options', SLEEK_SETTINGS_PAGE_URL, function () {
+	add_options_page(__('Sleek settings', 'sleek'), 'Sleek', 'manage_options', 'sleek-settings', function () {
 		?>
 		<div class="wrap">
-			<h1><?php echo SLEEK_SETTINGS_TITLE ?></h1>
+			<h1><?php _e('Sleek settings', 'sleek') ?></h1>
 			<form method="post" action="options.php">
-				<?php settings_fields(SLEEK_SETTINGS_NAME) ?>
-				<?php do_settings_sections(SLEEK_SETTINGS_SECTION_NAME) ?>
+				<?php settings_fields(SETTINGS_NAME) ?>
+				<?php do_settings_sections(SETTINGS_SECTION_NAME) ?>
 				<button><?php _e('Save settings', 'sleek') ?></button>
 			</form>
 		</div>
@@ -56,14 +54,14 @@ add_action('admin_menu', function () {
 ##################
 # Add our settings
 add_action('admin_init', function () {
-	register_setting(SLEEK_SETTINGS_NAME, SLEEK_SETTINGS_NAME, function ($input) {
+	register_setting(SETTINGS_NAME, SETTINGS_NAME, function ($input) {
 		# TODO: Validate
 		return $input;
 	});
 
-	add_settings_section(SLEEK_SETTINGS_SECTION_NAME, false, function () {
+	add_settings_section(SETTINGS_SECTION_NAME, false, function () {
 		# NOTE: Mandatory function but we don't need it...
-	}, SLEEK_SETTINGS_SECTION_NAME); # NOTE: WP Docs says this should be the add_options_page slug but that doesn't work. It needs to be the same as is later passed to do_settings_section
+	}, SETTINGS_SECTION_NAME); # NOTE: WP Docs says this should be the add_options_page slug but that doesn't work. It needs to be the same as is later passed to do_settings_section
 
 	# Built-in fields
 	add_setting('google_maps_api_key', [
