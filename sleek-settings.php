@@ -7,17 +7,13 @@ const SETTINGS_SECTION_NAME = 'sleek_settings_section';
 
 ####################
 # Add settings field
-function add_setting ($name, $args = []) {
-	$args = array_merge([
-		'label' => null,
-		'type' => 'text'
-	], $args);
-	$label = $args['label'] ?? __(ucfirst(str_replace('_', ' ', $name)), 'sleek');
+function add_setting ($name, $type = 'text', $label = null) {
+	$label = $label ?? __(\Sleek\Utils\convert_case($name, 'title'), 'sleek');
 
-	add_settings_field(SETTINGS_NAME . '_' . $name, $label, function () use ($name, $args) {
+	add_settings_field(SETTINGS_NAME . '_' . $name, $label, function () use ($name, $type, $label) {
 		$options = get_option(SETTINGS_NAME);
 
-		if ($args['type'] == 'textarea') {
+		if ($type == 'textarea') {
 			echo '<textarea name="' . SETTINGS_NAME . '[' . $name . ']" rows="6" cols="40">' . ($options[$name] ?? '') . '</textarea>';
 		}
 		else {
@@ -64,35 +60,14 @@ add_action('admin_init', function () {
 	}, SETTINGS_SECTION_NAME); # NOTE: WP Docs says this should be the add_options_page slug but that doesn't work. It needs to be the same as is later passed to do_settings_section
 
 	# Built-in fields
-	add_setting('google_maps_api_key', [
-		'label' => __('Google Maps API Key', 'sleek'),
-		'type' => 'text'
-	]);
+	add_setting('google_maps_api_key', 'text', __('Google Maps API Key', 'sleek'));
 	# TODO: Move to sleek-google-search
-/*	add_setting('google_search_api_key', [
-		'label' => __('Google Search API Key', 'sleek'),
-		'type' => 'text'
-	]);
-	add_setting('google_search_engine_id', [
-		'label' => __('Google Search Engine ID', 'sleek'),
-		'type' => 'text'
-	]); */
-	add_setting('head_code', [
-		'label' => esc_html__('Code inside <head>', 'sleek'),
-		'type' => 'textarea'
-	]);
-	add_setting('foot_code', [
-		'label' => esc_html__('Code just before </body>', 'sleek'),
-		'type' => 'textarea'
-	]);
-	add_setting('cookie_consent', [
-		'label' => esc_html__('Cookie consent text', 'sleek'),
-		'type' => 'textarea'
-	]);
-	add_setting('site_notice', [
-		'label' => esc_html__('Site notice', 'sleek'),
-		'type' => 'textarea'
-	]);
+#	add_setting('google_search_api_key', 'text', __('Google Search API Key', 'sleek'));
+#	add_setting('google_search_engine_id', 'text', __('Google Search Engine ID', 'sleek'));
+	add_setting('head_code', 'textarea', esc_html__('Code inside <head>', 'sleek'));
+	add_setting('foot_code', 'textarea', esc_html__('Code just before </body>', 'sleek'));
+	add_setting('cookie_consent', 'textarea', esc_html__('Cookie consent text', 'sleek'));
+	add_setting('site_notice', 'textarea', esc_html__('Site notice', 'sleek'));
 });
 
 ########

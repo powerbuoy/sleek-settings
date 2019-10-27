@@ -9,5 +9,8 @@
     ],
     "autoload": {
         "files": ["sleek-settings.php"]
+    },
+    "require": {
+        "powerbuoy/sleek-utils": "dev-master"
     }
 }
