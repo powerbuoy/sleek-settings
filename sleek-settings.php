@@ -40,7 +40,7 @@ add_action('admin_menu', function () {
 			<form method="post" action="options.php">
 				<?php settings_fields(SETTINGS_NAME) ?>
 				<?php do_settings_sections(SETTINGS_SECTION_NAME) ?>
-				<button><?php _e('Save settings', 'sleek') ?></button>
+				<button class="button button-primary"><?php _e('Save settings', 'sleek') ?></button>
 			</form>
 		</div>
 		<?php
