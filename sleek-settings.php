@@ -87,7 +87,7 @@ add_action('wp_head', function () {
 		$cookieConsent = apply_filters('sleek_cookie_consent', sprintf(__('We use cookies to bring you the best possible experience when browsing our site. <a href="%s" target="_blank">Read more</a> | <a href="#" class="close">Accept</a>', 'sleek'), $cookieUrl), $cookieUrl);
 	}
 
-	echo '<script>SLEEK_COOKIE_CONSENT = ' . json_encode($cookieConsent) . '</script>';
+#	echo '<script>SLEEK_COOKIE_CONSENT = ' . json_encode($cookieConsent) . '</script>';
 });
 
 ########
