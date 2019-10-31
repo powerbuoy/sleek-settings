@@ -11,6 +11,6 @@
         "files": ["sleek-settings.php"]
     },
     "require": {
-        "powerbuoy/sleek-utils": "dev-master"
+        "powerbuoy/sleek-utils": "^0.0.0"
     }
 }
