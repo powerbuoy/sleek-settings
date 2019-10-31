@@ -11,6 +11,6 @@
         "files": ["sleek-settings.php"]
     },
     "require": {
-        "powerbuoy/sleek-utils": "^0.0.0"
+        "powerbuoy/sleek-utils": "^1.0.0"
     }
 }
