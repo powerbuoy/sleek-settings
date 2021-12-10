@@ -8,7 +8,7 @@ const SETTINGS_SECTION_NAME = 'sleek_settings_section';
 ####################
 # Add settings field
 function add_setting ($name, $type = 'text', $label = null) {
-	$label = $label ?? __(\Sleek\Utils\convert_case($name, 'title'), 'sleek');
+	$label = $label ?? __(\Sleek\Utils\convert_case($name, 'title'), 'sleek_admin');
 
 	add_settings_field(SETTINGS_NAME . '_' . $name, $label, function () use ($name, $type, $label) {
 		$options = get_option(SETTINGS_NAME);
@@ -33,14 +33,15 @@ function get_setting ($name) {
 ################
 # Add admin page
 add_action('admin_menu', function () {
-	add_options_page(__('Sleek settings', 'sleek'), 'Sleek', 'manage_options', 'sleek-settings', function () {
+	# Translators: This is the title of the settings page (Settings -> Sleek inside the WP admin) for the theme Sleek
+	add_options_page(__('Sleek settings', 'sleek_admin'), 'Sleek', 'manage_options', 'sleek-settings', function () {
 		?>
 		<div class="wrap">
-			<h1><?php _e('Sleek settings', 'sleek') ?></h1>
+			<h1><?php _ex('Sleek settings', 'settings', 'sleek') ?></h1>
 			<form method="post" action="options.php">
 				<?php settings_fields(SETTINGS_NAME) ?>
 				<?php do_settings_sections(SETTINGS_SECTION_NAME) ?>
-				<button class="button button-primary"><?php _e('Save settings', 'sleek') ?></button>
+				<button class="button button-primary"><?php _e('Save settings', 'sleek_admin') ?></button>
 			</form>
 		</div>
 		<?php
@@ -60,8 +61,8 @@ add_action('admin_init', function () {
 	}, SETTINGS_SECTION_NAME); # NOTE: WP Docs says this should be the add_options_page slug but that doesn't work. It needs to be the same as is later passed to do_settings_section
 
 	# Built-in fields
-	add_setting('head_code', 'textarea', esc_html__('Code inside <head>', 'sleek'));
-	add_setting('foot_code', 'textarea', esc_html__('Code just before </body>', 'sleek'));
+	add_setting('head_code', 'textarea', esc_html__('Code inside <head>', 'sleek_admin'));
+	add_setting('foot_code', 'textarea', esc_html__('Code just before </body>', 'sleek_admin'));
 });
 
 ########
