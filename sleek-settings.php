@@ -37,7 +37,7 @@ add_action('admin_menu', function () {
 	add_options_page(__('Sleek settings', 'sleek_admin'), 'Sleek', 'manage_options', 'sleek-settings', function () {
 		?>
 		<div class="wrap">
-			<h1><?php _ex('Sleek settings', 'settings', 'sleek') ?></h1>
+			<h1><?php _e('Sleek settings', 'sleek_admin') ?></h1>
 			<form method="post" action="options.php">
 				<?php settings_fields(SETTINGS_NAME) ?>
 				<?php do_settings_sections(SETTINGS_SECTION_NAME) ?>
